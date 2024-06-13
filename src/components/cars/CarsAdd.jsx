@@ -21,6 +21,8 @@ const CarsAdd = ({ isOpen, handleClose }) => {
   const [cities,setCities]=useState([])
 
   const [coverImageUrl, setCoverImageUrl] = useState(null);
+  const [mainImageUrl, setMainImageUrl] = useState(null);
+  const [ImageUrl, setImageUrl] = useState(null);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -285,38 +287,50 @@ const CarsAdd = ({ isOpen, handleClose }) => {
 
           <div>
             <small>Upload car Images</small>
-          <label htmlFor="car-images-add" className="flex w-[90px] items-center justify-center p-4 gap-3 rounded-xl border border-gray-300 hover:border-primary transition-all duration-300 border-dashed bg-gray-50 cursor-pointer">
+            <div className="flex items-center gap-4"> 
+            {
+            ImageUrl&&<img className="object-contain w-full max-w-[110px] h-[120px]" src={URL.createObjectURL(ImageUrl)} alt="" />
+            }
+            <label htmlFor="car-images-add" className="flex w-[90px] items-center justify-center p-4 gap-3 rounded-xl border border-gray-300 hover:border-primary transition-all duration-300 border-dashed bg-gray-50 cursor-pointer">
             <div className="space-y-2 flex flex-col items-center">
               <h4 className="text-2xl font-semibold text-gray-700">+</h4>
               <span className="text-sm text-gray-500">Upload</span>
             </div>
-            <input {...register("images")} type="file" id="car-images-add" accept="image/*" hidden />
-          </label>
+            <input {...register("images")} type="file" id="car-images-add" accept="image/*" hidden onChange={e=>setImageUrl(e.target.files[0])}/>
+            </label>
+            </div>
           </div>
 
           <div>
             <small>Upload the main image</small>
-          <label htmlFor="car-image-main-add" className="flex w-[90px] items-center justify-center p-4 gap-3 rounded-xl border border-gray-300 hover:border-primary transition-all duration-300 border-dashed bg-gray-50 cursor-pointer">
+            <div className="flex items-center gap-4">
+            {
+            mainImageUrl&&<img className="object-contain w-full max-w-[110px] h-[120px]" src={URL.createObjectURL(mainImageUrl)} alt="" />
+            }
+            <label htmlFor="car-image-main-add" className="flex w-[90px] items-center justify-center p-4 gap-3 rounded-xl border border-gray-300 hover:border-primary transition-all duration-300 border-dashed bg-gray-50 cursor-pointer">
             <div className="space-y-2 flex flex-col items-center">
               <h4 className="text-2xl font-semibold text-gray-700">+</h4>
               <span className="text-sm text-gray-500">Upload</span>
             </div>
-            <input {...register("mainImage")} type="file" id="car-image-main-add" accept="image/*" hidden />
-          </label>
+            <input {...register("mainImage")} type="file" id="car-image-main-add" accept="image/*" hidden onChange={e=>setMainImageUrl(e.target.files[0])}/>
+            </label>
+            </div>
           </div>
 
           <div>
             <small>Upload the cover image</small>
-          <label htmlFor="car-image-cover-add" className="flex w-[90px] items-center justify-center p-4 gap-3 rounded-xl border border-gray-300 hover:border-primary transition-all duration-300 border-dashed bg-gray-50 cursor-pointer">
+            <div className="flex items-center gap-4">
+            {
+            coverImageUrl&&<img className="object-contain w-full max-w-[110px] h-[120px]" src={URL.createObjectURL(coverImageUrl)} alt="" />
+            }
+            <label htmlFor="car-image-cover-add" className="flex w-[90px] items-center justify-center p-4 gap-3 rounded-xl border border-gray-300 hover:border-primary transition-all duration-300 border-dashed bg-gray-50 cursor-pointer">
             <div className="space-y-2 flex flex-col items-center">
               <h4 className="text-2xl font-semibold text-gray-700">+</h4>
               <span className="text-sm text-gray-500">Upload</span>
             </div>
-            <input {...register("coverImage")} type="file" id="car-image-cover-add" accept="image/*" hidden />
+            <input {...register("coverImage")} type="file" id="car-image-cover-add" accept="image/*" hidden onChange={e=>setCoverImageUrl(e.target.files[0])} />
           </label>
-          {
-            coverImageUrl&&<img src={URL.createObjectURL(coverImageUrl[0])} alt="" />
-          }
+            </div>
           </div>
 
           <div className="flex justify-end items-center gap-5">

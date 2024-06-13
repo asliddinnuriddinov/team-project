@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BiSolidCategory } from "react-icons/bi";
 import { AiFillShop } from "react-icons/ai";
 import { FaCity,FaCar,FaChevronRight, FaChevronLeft  } from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
 import { NavLink } from 'react-router-dom';
 
 const Aside = () => {
@@ -33,6 +34,12 @@ const Aside = () => {
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink style={({isActive})=>isActive?{borderBottom:"1px solid #1677FF",color:"#1677FF"}:null} to={'/admin/locations'} className='flex border-b-[1px] border-b-transparent items-center gap-2 text-lg pb-1'>
+                        <IoLocationSharp/>
+                        Locations
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink style={({isActive})=>isActive?{borderBottom:"1px solid #1677FF",color:"#1677FF"}:null} to={'/admin/cars'} className='flex border-b-[1px] border-b-transparent items-center gap-2 text-lg pb-1'>
                         <FaCar/>
                         Cars
@@ -57,6 +64,11 @@ const Aside = () => {
                 <li>
                     <NavLink style={({isActive})=>isActive?{color:"#1677FF"}:null} to={'/admin/cities'} className='text-2xl'>
                         <FaCity/>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink style={({isActive})=>isActive?{color:"#1677FF"}:null} to={'/admin/locations'} className='text-2xl'>
+                        <IoLocationSharp/>
                     </NavLink>
                 </li>
                 <li>
