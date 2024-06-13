@@ -1,5 +1,6 @@
 import React from 'react'
 import CarsTable from '../components/cars/CarsTable'
+import CarsAdd from '../components/cars/CarsAdd'
 
 
 const Cars = () => {
