@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import CarsAdd from "./CarsAdd";
+import CarsDelete from "./CarsDelete";
 
 const thStyle = "text-left p-3 text-sm";
 const tdStyle = "text-left p-3 border-b-[1px] border-b-nav-main text-sm";
@@ -11,12 +12,21 @@ const CarsTable = () => {
   const url = "https://autoapi.dezinfeksiyatashkent.uz/api";
   const [loading, setLoading] = useState(false);
   const [addOpen,setOpenAdd]=useState(false)
+  const [deleteOpen,setOpenDelete]=useState(false)
+  const [carId,setCarId]=useState('')
 
   function openAddmodal(){
     setOpenAdd(true)
   }
   function closeAddmodal(){
     setOpenAdd(false)
+  }
+
+  function openDeletemodal(){
+    setOpenDelete(true)
+  }
+  function closeDeletemodal(){
+    setOpenDelete(false)
   }
 
   useEffect(() => {
@@ -66,7 +76,7 @@ const CarsTable = () => {
                 <button className="bg-primary text-white p-2 rounded-md text-lg hover:opacity-75 transition-all duration-300">
                   <MdEdit />
                 </button>
-                <button className="bg-danger text-white p-2 rounded-md text-lg hover:opacity-75 transition-all duration-300">
+                <button onClick={e=>{openDeletemodal();setCarId(data.id)}} className="bg-danger text-white p-2 rounded-md text-lg hover:opacity-75 transition-all duration-300">
                   <MdDelete />
                 </button>
               </div>
@@ -76,7 +86,8 @@ const CarsTable = () => {
         ))}
       </tbody>
     </table>
-    <CarsAdd isOpen={addOpen} handleClose={closeAddmodal}/>
+    <CarsAdd isOpen={addOpen} handleClose={closeAddmodal} reRenderTable={getCarsData}/>
+    <CarsDelete isOpen={deleteOpen} handleClose={closeDeletemodal} id={carId} reRenderTable={getCarsData}/>
     </>
   ) : (
     <div className="w-full h-[70vh] flex items-center justify-center">

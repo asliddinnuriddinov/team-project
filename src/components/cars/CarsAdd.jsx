@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 
 const inpDivStyle="flex flex-col gap-2"
 const inpStyle="border-[1px] border-nav-main w-full outline-primary cursor-pointer hover:border-primary"
 const url = "https://autoapi.dezinfeksiyatashkent.uz/api";
 
-const CarsAdd = ({ isOpen, handleClose }) => {
+const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
   const [inclusive,setInclusive]=useState(false)
   const [category,setCategory]=useState("")
   const [brand,setBrand]=useState("")
@@ -86,11 +87,13 @@ const CarsAdd = ({ isOpen, handleClose }) => {
       console.error(err);
     }
   }
+  
 
-  const {register,handleSubmit}=useForm()
+  const {register,handleSubmit,formState:{isDirty,isSubmitting}}=useForm()
 
   async function addCar({brandAdd,modelAdd,aed,aed1,usd,usd1,cityAdd,deposit,limit,fuel,motor,drive,transmission,color,year,seconds,categoryAdd,speed,people,protection,lolcationAdd,inclusive,coverImage,mainImage,images}){
     try{
+      console.log(images);
       const formdata=new FormData()
       formdata.append("brand_id",brandAdd)
       formdata.append("model_id",modelAdd)
@@ -99,8 +102,8 @@ const CarsAdd = ({ isOpen, handleClose }) => {
       formdata.append("year",year)
       formdata.append("seconds",seconds)
       formdata.append("category_id",categoryAdd)
-      formdata.append("images",images[0])
-      formdata.append("images",mainImage[0])
+      formdata.append("images",ImageUrl)
+      formdata.append("images",mainImageUrl)
       formdata.append("max_speed",speed)
       formdata.append("max_people",people)
       formdata.append("transmission",transmission)
@@ -116,7 +119,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
       formdata.append("price_in_usd_sale",usd1)
       formdata.append("location_id",lolcationAdd)
       formdata.append("inclusive",inclusive)
-      formdata.append("cover",coverImage[0])
+      formdata.append("cover",coverImageUrl)
 
       const response = await axios.post(url + '/cars',formdata, {
         headers: {
@@ -124,26 +127,27 @@ const CarsAdd = ({ isOpen, handleClose }) => {
           Authorization: "Bearer " + localStorage.getItem('token')
         }
       });
-      console.log(response);
+      reRenderTable()
+      toast.success("Added new Car successfully")
+      handleClose()
     } 
     catch(err){   
+      toast.error("Something wewnt wrong, try again")
       console.error(err);
     }   
   }
 
   return isOpen ? (
     <div
-      onClick={(e) => handleClose()}
       className="fixed top-0 left-0 w-full h-full bg-[#00000048] flex items-center justify-center z-50"
     >
       <div
-        onClick={(e) => e.stopPropagation()}
         className="w-[400px] overflow-y-scroll h-[90vh] px-5 py-8 bg-white"
       >
         <form onSubmit={handleSubmit(addCar)} className="flex flex-col gap-5">
           <div className={inpDivStyle}>
             <label htmlFor="category__add">Category</label>
-            <select {...register("categoryAdd")} className={inpStyle} value={category} onChange={e=>{setCategory(e.target.value)}} id="category__add">
+            <select {...register("categoryAdd")} required className={inpStyle} value={category} onChange={e=>{setCategory(e.target.value)}} id="category__add">
               <option hidden disabled defaultValue={true} value="">
                 Select Category
               </option>
@@ -157,7 +161,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
 
           <div className={inpDivStyle}>
             <label htmlFor="brand__add">Brand</label>
-            <select {...register("brandAdd")} className={inpStyle} value={brand} onChange={e=>{setBrand(e.target.value)}} id="brand__add">
+            <select {...register("brandAdd")} required className={inpStyle} value={brand} onChange={e=>{setBrand(e.target.value)}} id="brand__add">
               <option hidden disabled defaultValue={true} value="">
                 Select Brand
               </option>
@@ -171,7 +175,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
 
           <div className={inpDivStyle}>
             <label htmlFor="model__add">Model</label>
-            <select {...register("modelAdd")} className={inpStyle} value={model} onChange={e=>{setModel(e.target.value)}} id="model__add">
+            <select {...register("modelAdd")} required className={inpStyle} value={model} onChange={e=>{setModel(e.target.value)}} id="model__add">
               <option hidden disabled defaultValue={true} value="">
                 Select Model
               </option>
@@ -185,7 +189,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
 
           <div className={inpDivStyle}>
             <label htmlFor="location__add">Location</label>
-            <select {...register("lolcationAdd")} className={inpStyle} value={location} onChange={e=>{setLocation(e.target.value)}} id="location__add">
+            <select {...register("lolcationAdd")} required className={inpStyle} value={location} onChange={e=>{setLocation(e.target.value)}} id="location__add">
               <option hidden disabled defaultValue={true} value="">
                 Select Location
               </option>
@@ -199,7 +203,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
 
           <div className={inpDivStyle}>
             <label htmlFor="city__add">City</label>
-            <select {...register("cityAdd")} className={inpStyle} value={city} onChange={e=>{setCity(e.target.value)}} id="city__add">
+            <select {...register("cityAdd")} required className={inpStyle} value={city} onChange={e=>{setCity(e.target.value)}} id="city__add">
               <option hidden disabled defaultValue={true} value="">
                 Select City
               </option>
@@ -213,68 +217,68 @@ const CarsAdd = ({ isOpen, handleClose }) => {
 
           <div className={inpDivStyle}>
             <label htmlFor="color__add">Color</label>
-            <input {...register("color")} className={inpStyle} id="color__add" type="text" />
+            <input {...register("color")} required className={inpStyle} id="color__add" type="text" />
           </div>
 
           <div className={inpDivStyle}>
             <label htmlFor="year__add">Year</label>
-            <input {...register("year")} className={inpStyle} id="year__add" type="text" />
+            <input {...register("year")} required className={inpStyle} id="year__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="seconds__add">Seconds</label>
-            <input {...register("seconds")} className={inpStyle} id="seconds__add" type="text" />
+            <input {...register("seconds")} required className={inpStyle} id="seconds__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="speed__add">Speed</label>
-            <input {...register("speed")} className={inpStyle} id="speed__add" type="text" />
+            <input {...register("speed")} required className={inpStyle} id="speed__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="people__add">Max People</label>
-            <input {...register("people")} className={inpStyle} id="people__add" type="text" />
+            <input {...register("people")} required className={inpStyle} id="people__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="motor__add">Motor</label>
-            <input {...register("motor")} className={inpStyle} id="motor__add" type="text" />
+            <input {...register("motor")} required className={inpStyle} id="motor__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="transmission__add">Transmission</label>
-            <input {...register("transmission")} className={inpStyle} id="transmission__add" type="text" />
+            <input {...register("transmission")} required className={inpStyle} id="transmission__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="drive__add">Side Drive</label>
-            <input {...register("drive")} className={inpStyle} id="drive__add" type="text" />
+            <input {...register("drive")} required className={inpStyle} id="drive__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="fuel__add">Fuel</label>
-            <input {...register("fuel")} className={inpStyle} id="fuel__add" type="text" />
+            <input {...register("fuel")} required className={inpStyle} id="fuel__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="limit__add">Limit Per Day</label>
-            <input {...register("limit")} className={inpStyle} id="limit__add" type="text" />
+            <input {...register("limit")} required className={inpStyle} id="limit__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="deposit__add">Deposit</label>
-            <input {...register("deposit")} className={inpStyle} id="drive__add" type="text" />
+            <input {...register("deposit")} required className={inpStyle} id="drive__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="protection__add">Premium Protection Price</label>
-            <input {...register("protection")} className={inpStyle} id="protection__add" type="text" />
+            <input {...register("protection")} required className={inpStyle} id="protection__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="aed__add">Price in AED</label>
-            <input {...register("aed")} className={inpStyle} id="aed__add" type="text" />
+            <input {...register("aed")} required className={inpStyle} id="aed__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="usd__add">Price in USD</label>
-            <input {...register("usd")} className={inpStyle} id="usd__add" type="text" />
+            <input {...register("usd")} required className={inpStyle} id="usd__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="aed2__add">Price in AED(Otd)</label>
-            <input {...register("aed2")} className={inpStyle} id="aed2__add" type="text" />
+            <input {...register("aed2")} required className={inpStyle} id="aed2__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="usd2__add">Price in USD(Otd)</label>
-            <input {...register("usd2")} className={inpStyle} id="usd2__add" type="text" />
+            <input {...register("usd2")} required className={inpStyle} id="usd2__add" type="text" />
           </div>
 
           <div className="flex flex-col">
@@ -296,7 +300,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
               <h4 className="text-2xl font-semibold text-gray-700">+</h4>
               <span className="text-sm text-gray-500">Upload</span>
             </div>
-            <input {...register("images")} type="file" id="car-images-add" accept="image/*" hidden onChange={e=>setImageUrl(e.target.files[0])}/>
+            <input {...register("images")} required type="file" id="car-images-add" accept="image/*" hidden onChange={e=>setImageUrl(e.target.files[0])}/>
             </label>
             </div>
           </div>
@@ -312,7 +316,7 @@ const CarsAdd = ({ isOpen, handleClose }) => {
               <h4 className="text-2xl font-semibold text-gray-700">+</h4>
               <span className="text-sm text-gray-500">Upload</span>
             </div>
-            <input {...register("mainImage")} type="file" id="car-image-main-add" accept="image/*" hidden onChange={e=>setMainImageUrl(e.target.files[0])}/>
+            <input {...register("mainImage")} required type="file" id="car-image-main-add" accept="image/*" hidden onChange={e=>setMainImageUrl(e.target.files[0])}/>
             </label>
             </div>
           </div>
@@ -328,14 +332,21 @@ const CarsAdd = ({ isOpen, handleClose }) => {
               <h4 className="text-2xl font-semibold text-gray-700">+</h4>
               <span className="text-sm text-gray-500">Upload</span>
             </div>
-            <input {...register("coverImage")} type="file" id="car-image-cover-add" accept="image/*" hidden onChange={e=>setCoverImageUrl(e.target.files[0])} />
+            <input {...register("coverImage")} required type="file" id="car-image-cover-add" accept="image/*" hidden onChange={e=>setCoverImageUrl(e.target.files[0])} />
           </label>
             </div>
           </div>
 
           <div className="flex justify-end items-center gap-5">
             <button type="button" onClick={handleClose} className="border-[1px] border-nav-main px-7 py-2 rounded-md">Cancel</button>
-            <button className="border-[1px] border-transparent bg-primary text-white px-7 py-2 rounded-md">Add</button>
+            <button disabled={!isDirty||isSubmitting} className="border-[1px] flex items-center justify-center border-transparent bg-primary text-white h-[42px] w-[110px] rounded-md">
+              {
+                isSubmitting?
+                <img width={26} src="/assets/spinner-main.svg" alt="" />
+                :
+                "Add"
+              }
+            </button>
           </div>
         </form>
       </div>
