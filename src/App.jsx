@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './routes/Login'
 import Admin from './routes/Admin'
 import AdminPrivate from './utils/AdminPrivate'
@@ -9,6 +9,7 @@ import Categories from './routes/Categories'
 import Brands from './routes/Brands'
 import Cities from './routes/Cities'
 import Cars from './routes/Cars'
+import Locations from './routes/Locations'
 
 function App() {
   return (
@@ -22,8 +23,12 @@ function App() {
             <Route path='/admin/brands' element={<Brands/>}/>
             <Route path='/admin/cities' element={<Cities/>}/>
             <Route path='/admin/cars' element={<Cars/>}/>
+            <Route path='/admin/locations' element={<Locations/>}/>
+
+            <Route path='' element={<Navigate to="/admin/categories" replace />} />
           </Route>
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   )
