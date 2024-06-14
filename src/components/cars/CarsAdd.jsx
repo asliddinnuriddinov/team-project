@@ -25,15 +25,6 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
   const [mainImageUrl, setMainImageUrl] = useState(null);
   const [ImageUrl, setImageUrl] = useState(null);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setCoverImageUrl(imageUrl);
-    }
-  };
-
   useEffect(()=>{
     getCategoryData()
     getModelData()
@@ -91,9 +82,8 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
 
   const {register,handleSubmit,formState:{isDirty,isSubmitting}}=useForm()
 
-  async function addCar({brandAdd,modelAdd,aed,aed1,usd,usd1,cityAdd,deposit,limit,fuel,motor,drive,transmission,color,year,seconds,categoryAdd,speed,people,protection,lolcationAdd,inclusive,coverImage,mainImage,images}){
+  async function addCar({brandAdd,modelAdd,aed,aed1,usd,usd1,cityAdd,deposit,limit,fuel,motor,drive,transmission,color,year,seconds,categoryAdd,speed,people,protection,lolcationAdd,inclusive}){
     try{
-      console.log(images);
       const formdata=new FormData()
       formdata.append("brand_id",brandAdd)
       formdata.append("model_id",modelAdd)
@@ -153,7 +143,7 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
               </option>
               {
                 categories?.map(data=>
-                  <option value={data.id}>{data.name_en}</option>
+                  <option key={data.id} value={data.id}>{data.name_en}</option>
                 )
               }
             </select>
@@ -167,7 +157,7 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
               </option>
               {
                 brands?.map(data=>
-                  <option value={data.id}>{data.title}</option>
+                  <option key={data.id} value={data.id}>{data.title}</option>
                 )
               }
             </select>
@@ -181,7 +171,7 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
               </option>
               {
                 models?.map(data=>
-                  <option value={data.id}>{data.name}</option>
+                  <option key={data.id} value={data.id}>{data.name}</option>
                 )
               }
             </select>
@@ -195,7 +185,7 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
               </option>
               {
                 locations?.map(data=>
-                  <option value={data.id}>{data.name}</option>
+                  <option key={data.id} value={data.id}>{data.name}</option>
                 )
               }
             </select>
@@ -209,7 +199,7 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
               </option>
               {
                 cities?.map(data=>
-                  <option value={data.id}>{data.name}</option>
+                  <option key={data.id} value={data.id}>{data.name}</option>
                 )
               }
             </select>
