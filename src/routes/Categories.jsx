@@ -94,6 +94,7 @@ const Categories = () => {
   }
 
   return (
+    
     <div className='text-7xl h-full bg-main overflow-y-scroll px-14 py-10'>
       <div className="container bg-white rounded-xl py-5">
         <table >
