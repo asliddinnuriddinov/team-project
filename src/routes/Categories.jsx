@@ -94,42 +94,39 @@ const Categories = () => {
   return (
     <div className='text-7xl h-full bg-main'>
       <div className="container bg-white mt-10 ml-10 pl-10 pt-10">
-        <table border={1}>
-          <thead>
-            <tr className='flex md:items-center gap-8 '>
-              <th className='text-sm'>№</th>
-              <th className='text-sm'>name_en</th>
-              <th className='text-sm'>name_ru</th>
-              <th className='text-sm'>image</th>
-              <th className='text-sm'>actions</th>
+        <table >
+     
+            <tr className='flex md:items-center gap-8 bg-slate-100 rounded px-10'>
+              <th className='text-base w-[120px] pt-5 pb-5'>№</th>
+              <th className='text-base w-[240px]'>Name</th>
+              <th className='text-base w-[270px]'>Text</th>
+              <th className='text-base w-[270px]'>images</th>
+              <th className='text-base w-[50px]'>Actions</th>
             </tr>
-          </thead>
-          <tbody>
             {categories && categories.map((item, index) => (
-              <tr className='flex md:items-center gap-8' key={index}>
-                <td><h3 className='text-sm'>{index + 1 + '.' + ' -'} {item.name_en}</h3></td>
-                <td className='text-sm'>{item.name_en}</td>
-                <td className='text-sm'>{item.name_ru}</td>
-                <td><img className='w-28 h-26' src={`${urlImg}${item.image_src}`} alt={item.name_ru} /></td>
-                <td className='flex gap-5'>
-                  <button className='text-sm bg-blue-600 pt-2 pl-4 pr-4 pb-2 rounded-md' onClick={() => editCategory(item)}><LiaEyeDropperSolid /></button>
-                  <button className='text-sm bg-red-600 pt-2 pl-4 pr-4 pb-2 rounded-md' onClick={() => deleteCategory(item.id)}><LiaArchiveSolid /></button>
+              <tr className='flex md:items-center gap-8 ' key={index}>
+                <td className='w-[200px] rounded bg-slate-50 p-2'><h3 className='text-sm'>{index + 1 + '.'} {item.name_en}</h3></td>
+                <td className='text-sm w-[250px] bg-slate-50 p-2'>{item.name_en}</td>
+                <td className='text-sm w-[250px] bg-slate-100 p-2'>{item.name_ru}</td>
+                <td><img className='w-[200px] h-26 mt-10 rounded-lg' src={`${urlImg}${item.image_src}`} alt={item.name_ru} /></td>
+                <td className='flex gap-5 w-[200px]'>
+                  <button className='text-sm bg-blue-600 pt-4 pl-4 pr-4 pb-3 rounded-md' onClick={() => editCategory(item)}><LiaEyeDropperSolid /></button>
+                  <button className='text-sm bg-red-600 pt-4 pl-4 pr-4 pb-3 rounded-md' onClick={() => deleteCategory(item.id)}><LiaArchiveSolid /></button>
                 </td>
               </tr>
             ))}
-          </tbody>
         </table>
 
-        <form onSubmit={createCategory} className='mt-10 flex row'>
-          <div className='flex-col'>
+        <form onSubmit={createCategory} className='mt-10 flex row items-center'>
+          <div className='flex flex-col'>
             <label className='text-sm' htmlFor="">Create and Edit</label>
             <input className='text-sm border-current border-2 p-2' type="text" placeholder="add or edit text" value={data.name_en} onChange={(e) => setData({ ...data, name_en: e.target.value })} />
           </div>
-          <div>
+          <div className='flex flex-col'>
             <label className='text-sm' htmlFor="">Create and Edit</label>
             <input className='text-sm border-current border-2 p-2' type="text" placeholder="add or edit text" value={data.name_ru} onChange={(e) => setData({ ...data, name_ru: e.target.value })} />
           </div>
-          <div>
+          <div className='flex flex-row items-center '>
             <label htmlFor=""></label>
             <input className='text-sm' type="file" onChange={(e) => setData({ ...data, image_src: e.target.files[0] })} />
             <button className='text-sm border-current border-2 p-2' type='submit'>Send</button>
