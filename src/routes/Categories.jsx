@@ -94,8 +94,8 @@ const Categories = () => {
   }
 
   return (
-    <div className='text-7xl h-full bg-main overflow-hidden overflow-scroll'>
-      <div className="container bg-white mt-10 ml-10 pl-10 pt-10">
+    <div className='text-7xl h-full bg-main overflow-y-scroll px-14 py-10'>
+      <div className="container bg-white rounded-xl py-5">
         <table >
           <tr className='flex md:items-center gap-8  rounded px-10 mr-7' style={{ background: '#E3EFFE' }}>
             <th className='text-base w-[120px] pt-5 pb-5'>№</th>
