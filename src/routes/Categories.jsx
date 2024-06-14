@@ -54,7 +54,7 @@ const Categories = () => {
     })
       .then(res => res.json())
       .then(() => {
-        alert("Category edited");
+        toast("Category edited");
         getCategory();
       })
       .catch(error => {
@@ -84,7 +84,7 @@ const Categories = () => {
     })
       .then(res => res.json())
       .then(() => {
-        alert("Category created");
+        toast("Category created");
         setData({ name_en: "", name_ru: "", image_src: null });
         getCategory();
       })
