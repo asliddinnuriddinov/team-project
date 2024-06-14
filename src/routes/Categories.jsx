@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { LiaArchiveSolid, LiaEyeDropperSolid } from "react-icons/lia";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Categories = () => {
+  const notify = () => toast();
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState({ name_en: "", name_ru: "", image_src: null });
   const urlImg = "https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/";
@@ -27,7 +29,7 @@ const Categories = () => {
     })
       .then(res => res.json())
       .then(() => {
-        alert("Category deleted");
+        toast("File deleted");
         getCategory();
       })
       .catch(error => {
@@ -92,32 +94,31 @@ const Categories = () => {
   }
 
   return (
-    <div className='text-7xl h-full bg-main'>
+    <div className='text-7xl h-full bg-main overflow-hidden overflow-scroll'>
       <div className="container bg-white mt-10 ml-10 pl-10 pt-10">
         <table >
-     
-            <tr className='flex md:items-center gap-8 bg-slate-100 rounded px-10'>
-              <th className='text-base w-[120px] pt-5 pb-5'>№</th>
-              <th className='text-base w-[240px]'>Name</th>
-              <th className='text-base w-[270px]'>Text</th>
-              <th className='text-base w-[270px]'>images</th>
-              <th className='text-base w-[50px]'>Actions</th>
+          <tr className='flex md:items-center gap-8  rounded px-10 mr-7' style={{ background: '#E3EFFE' }}>
+            <th className='text-base w-[120px] pt-5 pb-5'>№</th>
+            <th className='text-base w-[240px]'>Name</th>
+            <th className='text-base w-[270px]'>Text</th>
+            <th className='text-base w-[270px]'>images</th>
+            <th className='text-base w-[50px]'>Actions</th>
+          </tr>
+          {categories && categories.map((item, index) => (
+            <tr className='flex md:items-center gap-8 ' key={index}>
+              <td className='w-[200px] rounded bg-slate-50 p-2'><h3 className='text-sm'>{index + 1 + '.'} {item.name_en}</h3></td>
+              <td className='text-sm w-[250px] bg-slate-50 p-2'>{item.name_en}</td>
+              <td className='text-sm w-[250px] bg-slate-100 p-2'>{item.name_ru}</td>
+              <td><img className='w-[200px] h-26 mt-10 rounded-lg' src={`${urlImg}${item.image_src}`} alt={item.name_ru} /></td>
+              <td className='flex gap-5 w-[200px]'>
+                <button className='text-sm bg-blue-600 pt-3 pl-4 pr-4 pb-3 rounded-md text-white' onClick={() => editCategory(item)}>Edit</button>
+                <button className='text-sm bg-red-600 pt-3 pl-4 pr-4 pb-3 rounded-md text-white'  onClick={() => deleteCategory(item.id)}>Del</button>
+              </td>
             </tr>
-            {categories && categories.map((item, index) => (
-              <tr className='flex md:items-center gap-8 ' key={index}>
-                <td className='w-[200px] rounded bg-slate-50 p-2'><h3 className='text-sm'>{index + 1 + '.'} {item.name_en}</h3></td>
-                <td className='text-sm w-[250px] bg-slate-50 p-2'>{item.name_en}</td>
-                <td className='text-sm w-[250px] bg-slate-100 p-2'>{item.name_ru}</td>
-                <td><img className='w-[200px] h-26 mt-10 rounded-lg' src={`${urlImg}${item.image_src}`} alt={item.name_ru} /></td>
-                <td className='flex gap-5 w-[200px]'>
-                  <button className='text-sm bg-blue-600 pt-4 pl-4 pr-4 pb-3 rounded-md' onClick={() => editCategory(item)}><LiaEyeDropperSolid /></button>
-                  <button className='text-sm bg-red-600 pt-4 pl-4 pr-4 pb-3 rounded-md' onClick={() => deleteCategory(item.id)}><LiaArchiveSolid /></button>
-                </td>
-              </tr>
-            ))}
+          ))}
         </table>
 
-        <form onSubmit={createCategory} className='mt-10 flex row items-center'>
+        <form onSubmit={createCategory} className='mt-10 flex-col items-center'>
           <div className='flex flex-col'>
             <label className='text-sm' htmlFor="">Create and Edit</label>
             <input className='text-sm border-current border-2 p-2' type="text" placeholder="add or edit text" value={data.name_en} onChange={(e) => setData({ ...data, name_en: e.target.value })} />
@@ -126,10 +127,11 @@ const Categories = () => {
             <label className='text-sm' htmlFor="">Create and Edit</label>
             <input className='text-sm border-current border-2 p-2' type="text" placeholder="add or edit text" value={data.name_ru} onChange={(e) => setData({ ...data, name_ru: e.target.value })} />
           </div>
-          <div className='flex flex-row items-center '>
+          <div className='flex flex-row items-center'>
             <label htmlFor=""></label>
             <input className='text-sm' type="file" onChange={(e) => setData({ ...data, image_src: e.target.files[0] })} />
-            <button className='text-sm border-current border-2 p-2' type='submit'>Send</button>
+            <button className='text-sm border-current border-2 p-2' type='submit ' onClick={notify}>Create</button>
+            <ToastContainer />
           </div>
         </form>
       </div>
