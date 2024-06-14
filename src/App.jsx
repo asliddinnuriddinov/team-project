@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './routes/Login'
 import Admin from './routes/Admin'
 import AdminPrivate from './utils/AdminPrivate'
@@ -24,8 +24,11 @@ function App() {
             <Route path='/admin/cities' element={<Cities/>}/>
             <Route path='/admin/cars' element={<Cars/>}/>
             <Route path='/admin/locations' element={<Locations/>}/>
+
+            <Route path='' element={<Navigate to="/admin/categories" replace />} />
           </Route>
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   )
