@@ -9,7 +9,6 @@ const inpStyle="border-[1px] border-nav-main w-full outline-primary cursor-point
 const url = "https://autoapi.dezinfeksiyatashkent.uz/api";
 
 const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
-    console.log(carData);
     const [inclusive,setInclusive]=useState(false)
     const [category,setCategory]=useState("")
     const [brand,setBrand]=useState("")
@@ -170,7 +169,7 @@ const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
       <form onSubmit={handleSubmit(eeditCar)} className="flex flex-col gap-5">
         <div className={inpDivStyle}>
           <label htmlFor="category__add">Category</label>
-          <select {...register("categoryAdd")} required className={inpStyle} onChange={e=>{setCategory(e.target.value)}} id="category__add">
+          <select {...register("categoryAdd")} value={category} required className={inpStyle} onChange={e=>{setCategory(e.target.value)}} id="category__add">
             {
               categories?.map(data=>
                 <option key={data.id} value={data.id}>{data.name_en}</option>
@@ -181,7 +180,7 @@ const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
 
         <div className={inpDivStyle}>
           <label htmlFor="brand__add">Brand</label>
-          <select {...register("brandAdd")} required className={inpStyle}  onChange={e=>{setBrand(e.target.value)}} id="brand__add">
+          <select {...register("brandAdd")} value={brand} required className={inpStyle}  onChange={e=>{setBrand(e.target.value)}} id="brand__add">
             {
               brands?.map(data=>
                 <option key={data.id} value={data.id}>{data.title}</option>
@@ -192,7 +191,7 @@ const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
 
         <div className={inpDivStyle}>
           <label htmlFor="model__add">Model</label>
-          <select {...register("modelAdd")} required className={inpStyle} onChange={e=>{setModel(e.target.value)}} id="model__add">
+          <select {...register("modelAdd")} value={model} required className={inpStyle} onChange={e=>{setModel(e.target.value)}} id="model__add">
             {
               models?.map(data=>
                 <option key={data.id} value={data.id}>{data.name}</option>
@@ -203,7 +202,7 @@ const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
 
         <div className={inpDivStyle}>
           <label htmlFor="location__add">Location</label>
-          <select {...register("lolcationAdd")} required className={inpStyle} onChange={e=>{setLocation(e.target.value)}} id="location__add">
+          <select {...register("lolcationAdd")} value={location} required className={inpStyle} onChange={e=>{setLocation(e.target.value)}} id="location__add">
             {
               locations?.map(data=>
                 <option key={data.id} value={data.id}>{data.name}</option>
@@ -214,7 +213,7 @@ const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
 
         <div className={inpDivStyle}>
           <label htmlFor="city__add">City</label>
-          <select {...register("cityAdd")} required className={inpStyle} onChange={e=>{setCity(e.target.value)}} id="city__add">
+          <select {...register("cityAdd")} value={city} required className={inpStyle} onChange={e=>{setCity(e.target.value)}} id="city__add">
             {
               cities?.map(data=>
                 <option key={data.id} value={data.id}>{data.name}</option>
@@ -347,7 +346,7 @@ const CarsEdit = ({ isOpen, handleClose, id,reRenderTable,carData }) => {
 
         <div className="flex justify-end items-center gap-5">
           <button type="button" onClick={handleClose} className="border-[1px] border-nav-main px-7 py-2 rounded-md">Cancel</button>
-          <button disabled={!isDirty||isSubmitting} className="border-[1px] flex items-center justify-center border-transparent bg-primary text-white h-[42px] w-[110px] rounded-md">
+          <button disabled={isSubmitting} className="border-[1px] flex items-center justify-center border-transparent bg-primary text-white h-[42px] w-[110px] rounded-md">
             {
               isSubmitting?
               <img width={26} src="/assets/spinner-main.svg" alt="" />

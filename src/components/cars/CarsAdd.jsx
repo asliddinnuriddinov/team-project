@@ -264,11 +264,11 @@ const CarsAdd = ({ isOpen, handleClose,reRenderTable }) => {
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="aed2__add">Price in AED(Otd)</label>
-            <input {...register("aed2")} required className={inpStyle} id="aed2__add" type="text" />
+            <input {...register("aed1")} required className={inpStyle} id="aed2__add" type="text" />
           </div>
           <div className={inpDivStyle}>
             <label htmlFor="usd2__add">Price in USD(Otd)</label>
-            <input {...register("usd2")} required className={inpStyle} id="usd2__add" type="text" />
+            <input {...register("usd1")} required className={inpStyle} id="usd2__add" type="text" />
           </div>
 
           <div className="flex flex-col">
