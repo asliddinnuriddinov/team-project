@@ -4,12 +4,13 @@ import Login from './routes/Login'
 import Admin from './routes/Admin'
 import AdminPrivate from './utils/AdminPrivate'
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import Categories from './routes/Categories'
 import Brands from './routes/Brands'
 import Cities from './routes/Cities'
 import Cars from './routes/Cars'
 import Locations from './routes/Locations'
+import { useEffect } from 'react'
 
 function App() {
   return (
