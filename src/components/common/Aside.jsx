@@ -72,7 +72,7 @@ const Aside = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink style={({isActive})=>isActive?{color:"#1677FF"}:null} to={'/admin/cars'} className='text-2xl'>
+                    <NavLink style={({isActive})=>isActive?{color:"#1677FF"}:null} to={'/admin/cars'} className='text-2xl '>
                         <FaCar/>
                     </NavLink>
                 </li>

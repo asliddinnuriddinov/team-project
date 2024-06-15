@@ -11,6 +11,7 @@ const tdStyle = "text-left p-3 border-b-[1px] border-b-nav-main text-sm";
 const CarsTable = () => {
   const [carsData, setCarsData] = useState([]);
   const url = "https://autoapi.dezinfeksiyatashkent.uz/api";
+    const urlImg = "https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/"
   const [loading, setLoading] = useState(false);
   const [addOpen,setOpenAdd]=useState(false)
   const [deleteOpen,setOpenDelete]=useState(false)
@@ -56,6 +57,7 @@ const CarsTable = () => {
       setLoading(false);
     }
   }
+  console.log(carsData);
   return !loading ? (
     <>
     <table className="w-full">
@@ -65,6 +67,7 @@ const CarsTable = () => {
           <th className={thStyle}>Model</th>
           <th className={thStyle}>Color</th>
           <th className={thStyle}>City</th>
+          <th className={thStyle}>Image</th>
           <th className={thStyle}>Action</th>
           <th className={thStyle}>
             <div className="flex items-center justify-end">
@@ -83,6 +86,9 @@ const CarsTable = () => {
             <td className={tdStyle}>{data.model.name}</td>
             <td className={tdStyle}>{data.color}</td>
             <td className={tdStyle}>{data.city.name}</td>
+            <td className={tdStyle}>
+              <img className="object-cover w-full min-h-[90px] max-w-[120px]" src={`${urlImg}${data.car_images[0].image.src}`} alt="" />
+            </td>
             <td className={tdStyle}>
               <div className="flex items-center gap-4">
                 <button onClick={e=>{setCarId(data.id);setSingleCarData(data);openEditmodal();}} className="bg-primary text-white p-2 rounded-md text-lg hover:opacity-75 transition-all duration-300">
