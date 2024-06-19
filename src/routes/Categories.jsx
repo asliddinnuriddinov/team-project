@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { LiaArchiveSolid, LiaEyeDropperSolid } from "react-icons/lia";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Categories = () => {
-  const notify = () => toast();
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState({ name_en: "", name_ru: "", image_src: null });
   const urlImg = "https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/";
@@ -54,7 +53,7 @@ const Categories = () => {
     })
       .then(res => res.json())
       .then(() => {
-        alert("Category edited");
+        toast("Category edited");
         getCategory();
       })
       .catch(error => {
@@ -84,7 +83,7 @@ const Categories = () => {
     })
       .then(res => res.json())
       .then(() => {
-        alert("Category created");
+        toast("Category created");
         setData({ name_en: "", name_ru: "", image_src: null });
         getCategory();
       })
@@ -94,6 +93,7 @@ const Categories = () => {
   }
 
   return (
+    
     <div className='text-7xl h-full bg-main overflow-y-scroll px-14 py-10'>
       <div className="container bg-white rounded-xl py-5">
         <table >
@@ -130,8 +130,7 @@ const Categories = () => {
           <div className='flex flex-row items-center'>
             <label htmlFor=""></label>
             <input className='text-sm' type="file" onChange={(e) => setData({ ...data, image_src: e.target.files[0] })} />
-            <button className='text-sm border-current border-2 p-2' type='submit ' onClick={notify}>Create</button>
-            <ToastContainer />
+            <button className='text-sm border-current border-2 p-2' type='submit '>Create</button>
           </div>
         </form>
       </div>

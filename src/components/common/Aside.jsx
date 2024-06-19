@@ -72,7 +72,7 @@ const Aside = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink style={({isActive})=>isActive?{color:"#1677FF"}:null} to={'/admin/cars'} className='text-2xl'>
+                    <NavLink style={({isActive})=>isActive?{color:"#1677FF"}:null} to={'/admin/cars'} className='text-2xl '>
                         <FaCar/>
                     </NavLink>
                 </li>
@@ -84,11 +84,11 @@ const Aside = () => {
 
         {
             !open?
-            <button onClick={e=>setOpen(true)} className='absolute top-5 right-[-45%] rounded-md z-30 bg-primary text-white p-2'>
+            <button onClick={e=>setOpen(true)} className='absolute top-3 right-[-45%] rounded-md z-30 bg-primary text-white p-2'>
                 <FaChevronRight className='text-lg'/>
             </button>
             :
-            <button onClick={e=>setOpen(false)} className='absolute top-5 right-[-20%] rounded-md z-30 bg-primary text-white p-2'>
+            <button onClick={e=>setOpen(false)} className='absolute top-3 right-[-20%] rounded-md z-30 bg-primary text-white p-2'>
                 <FaChevronLeft className='text-lg'/>
             </button>
         }
