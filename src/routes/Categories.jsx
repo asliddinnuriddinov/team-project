@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Categories = () => {
   const notify = (message) => toast(message);
@@ -225,8 +225,6 @@ const Categories = () => {
           </div>
         </div>
       )}
-
-      <ToastContainer />
     </div>
   );
 };
