@@ -101,7 +101,7 @@ const Categories = () => {
   };
 
   return (
-    <div className='text-7xl h-full bg-main overflow-y-scroll px-14 py-10'>
+    <div className='h-full bg-main overflow-y-scroll px-14 py-10'>
       <div className="container bg-white rounded-xl py-5 pr-[50px]">
         <div className='flex justify-end mb-4'>
           <button className='text-sm bg-green-600 pt-3 pl-4 pr-4 pb-3 rounded-md text-white' onClick={() => setCreateOpen(true)}>Create</button>
