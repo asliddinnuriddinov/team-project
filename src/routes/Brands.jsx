@@ -164,7 +164,7 @@ console.log(item,"iteemm")
               <td className="shadow-sm border border-white-700 ... h-[40px]  w-[250px] rounded-md">{logos.title}</td>
               <td className="shadow-sm border border-white-700 ... h-[40px] w-[10px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full h-auto rounded-md'/></td>
               <td className="shadow-sm border border-white-700 ... h-[40px]   w-[10px] rounded-md">
-              <button className='bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-md m-2'><MdEdit className='text-md' onClick={handleEditOpen}/></button>
+              <button className='bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-md m-2' onClick={handleEditOpen}><MdEdit className='text-md' /></button>
               <button className='bg-red-600 hover:bg-red-500 text-white p-3 rounded-md   m-2' onClick={handleShow}><MdDelete  className='text-md'/></button>
               </td>
             </tr>
