@@ -178,11 +178,11 @@ const Cities = () => {
                         <th className='text-base w-[50px]'>Actions</th>
                     </tr>
                     {cities && cities.map((item, index) => (
-                        <tr className='flex sm:items-center m-4' key={index}>
-                            <td className='w-[200px] rounded p-20 mr-16'><h3 className='text-sm'>{index + 1 + '.'}</h3></td>
+                        <tr className='flex justify-between rounded-lg border border-slate-400 items-center m-4' key={index}>
+                            <td className='text-sm w-[200px] rounded p-20 mr-16'><h3 className='text-sm'>{index + 1 + '.'}</h3></td>
                             <td className='text-sm w-[250px] p-2 mr-12'>{item.name}</td>
                             <td className='text-sm w-[250px] p-2'>{item.text}</td>
-                            <td><img className='w-[100px] h-26 mt-10 mr-16 ml-8 rounded-lg' src={`${urlImg}${item.image_src}`} alt={item.name} /></td>
+                            <td className='w-[20%] mr-16 ml-8 rounded-lg'><img src={`${urlImg}${item.image_src}`} alt={item.name} /></td>
                             <td className='flex gap-5 w-[200px] ml-10'>
                                 <button className='text-sm bg-blue-600 pt-3 pl-4 pr-4 pb-3 rounded-md text-white' onClick={() => handleEditClick(item)}>Edit</button>
                                 <button className='text-sm bg-red-600 pt-3 pl-4 pr-4 pb-3 rounded-md text-white' onClick={() => deleteCity(item.id)}>Del</button>
