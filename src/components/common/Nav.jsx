@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const Nav = () => {
     const dispatch=useDispatch()
@@ -14,7 +15,7 @@ const Nav = () => {
                 <p className='text-lg font-semibold'>You really want to Log Out?</p>
                 <div className='flex items-center justify-center gap-4 mt-8'>
                     <button className='bg-primary text-white rounded-md px-6 py-2' onClick={e=>{setModal(false)}}>Cancel</button>
-                    <button className='bg-danger text-white rounded-md px-6 py-2' onClick={e=>{dispatch({type:"LOGOUT"});setModal(false)}}>Yes</button>
+                    <button className='bg-danger text-white rounded-md px-6 py-2' onClick={e=>{dispatch({type:"LOGOUT"});setModal(false);toast.success("Logged Out Successfully")}}>Yes</button>
                 </div>
             </div>
         </div>
