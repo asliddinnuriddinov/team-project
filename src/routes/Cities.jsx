@@ -8,7 +8,7 @@ const Cities = () => {
     const [modal, setModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
-    const urlImg = "https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/";
+    const urlImg = "https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/"
     const token = localStorage.getItem("token");
 
     const style = { color: "#00000072", width: "30px", cursor: "pointer" };
