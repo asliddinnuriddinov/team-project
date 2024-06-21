@@ -74,6 +74,7 @@ const createNewPost = (event) => {
   .then((data)=> {
      toast("Successfully added")
      setBrand(false)
+     getBrands();
   })
   .catch((err)=> {
     console.log(err.message)
@@ -162,7 +163,7 @@ console.log(item,"iteemm")
              <tbody key={index}>
              <tr onClick={()=> setDeleteId(logos?.id)}>
               <td className="shadow-sm border border-white-700 ... h-[40px]  w-[250px] rounded-md">{logos.title}</td>
-              <td className="shadow-sm border border-white-700 ... h-[40px] w-[10px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full h-auto rounded-md'/></td>
+              <td className="shadow-sm border border-transparent ... h-[40px] w-[10px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full max-h-[200px] rounded-md'/></td>
               <td className="shadow-sm border border-white-700 ... h-[40px]   w-[10px] rounded-md">
               <button className='bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-md m-2' onClick={handleEditOpen}><MdEdit className='text-md' /></button>
               <button className='bg-red-600 hover:bg-red-500 text-white p-3 rounded-md   m-2' onClick={handleShow}><MdDelete  className='text-md'/></button>
