@@ -40,7 +40,7 @@ const Login = () => {
                 const token = response.data.data.tokens.accessToken.token;
                 localStorage.setItem('token', token);
                 dispatch({ payload: token, type: "LOGIN" });
-                navigate('/admin/categories');
+                navigate('/admin/cars');
                 toast.success("Logged In Successfully", {
                     position: "top-center"
                 });
