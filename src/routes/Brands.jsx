@@ -32,9 +32,9 @@ const Brands = () => {
 
   const tokenAi = localStorage.getItem("token")
 
-  const formdata = new FormData();
-  formdata.append("title",title);
-  formdata.append("images",images);
+  const formData = new FormData();
+  formData.append("title",title);
+  formData.append("images",images);
 
 
   const [data, setData] = useState({ title:"", images_src: null })
@@ -64,7 +64,7 @@ const createNewPost = (event) => {
   event.preventDefault();
   fetch("https://autoapi.dezinfeksiyatashkent.uz/api/brands", {
      method: "POST",
-     body: formdata,
+     body: formData,
     
      headers: {
         "Authorization": `Bearer ${tokenAi}`
@@ -109,28 +109,23 @@ const deleteData = () => {
   //  Edit
 
   const editBrandNew = (item) => {
-     setData({...data, title:item.title, images_src: item.images_src});
-console.log(item,"iteemm")
-    const formData = new FormData();
- console.log(data,"dattaaa")
-    formData.append("title", data.title)
-    formData.append("images", data.images_src)
-    item.preventDefault();
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/brands/${deleteId}`, {
-      method: "PUT",
-      body: formData,
+    fetch('https://autoapi.dezinfeksiyatashkent.uz/api/brands', {
+      method: 'POST',
       headers: {
-       Authorization: `Bearer ${tokenAi}`
-      }
-    })
-    .then(res => res.json())
-    .then(deleteBrand => {
-       toast("Successfully Edited");
-       seteditBrand(false)
-       getBrands();
-    }).catch(error => {
-     toast("Something went wrong", error)
-    })
+          'Authorization': `Bearer ${tokenAi}`,
+      },
+      body: formData,
+  })
+      .then(res => res.json())
+      .then(() => {
+          seteditBrand(false);
+          getBrands();
+          toast.success("City added successfully");
+          setData({ id: null, name: "", text: "", images: null });
+      })
+      .catch(err => {
+          console.error("Error creating city:", err);
+      });
   }
 
 
@@ -162,9 +157,9 @@ console.log(item,"iteemm")
              
              <tbody key={index}>
              <tr onClick={()=> setDeleteId(logos?.id)}>
-              <td className="shadow-sm border border-white-700 ... h-[40px]  w-[250px] rounded-md">{logos.title}</td>
-              <td className="shadow-sm border border-transparent ... h-[40px] w-[10px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full max-h-[200px] rounded-md'/></td>
-              <td className="shadow-sm border border-white-700 ... h-[40px]   w-[10px] rounded-md">
+              <td className="shadow-sm border border-white-700 ... h-[20px]  w-[250px] rounded-md">{logos.title}</td>
+              <td className="shadow-sm border border-transparent ... h-[20px] w-[40px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full max-h-[200px] rounded-md'/></td>
+              <td className="shadow-sm border border-transparent ... h-[20px]   w-[10px] rounded-md">
               <button className='bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-md m-2' onClick={handleEditOpen}><MdEdit className='text-md' /></button>
               <button className='bg-red-600 hover:bg-red-500 text-white p-3 rounded-md   m-2' onClick={handleShow}><MdDelete  className='text-md'/></button>
               </td>
