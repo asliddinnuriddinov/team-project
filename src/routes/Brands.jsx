@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const Brands = () => {
 
   const [showModal, setShowModal] = useState(false)
-
+  const [deleteId, setDeleteId] = useState();
   const handleClose = () => setShowModal(false);
   const handleShow =  () => setShowModal(true);
 
@@ -22,7 +22,10 @@ const Brands = () => {
   const [editBrand, seteditBrand] = useState(false)
 
   const handleEditClose = () => seteditBrand(false);
-  const handleEditOpen = () => seteditBrand(true)
+  const handleEditOpen = (id) => {
+    setDeleteId(id)
+    seteditBrand(true)
+  }
 
 
   const [posts, setPosts] = useState([]);
@@ -32,9 +35,9 @@ const Brands = () => {
 
   const tokenAi = localStorage.getItem("token")
 
-  const formdata = new FormData();
-  formdata.append("title",title);
-  formdata.append("images",images);
+  const formData = new FormData();
+  formData.append("title",title);
+  formData.append("images",images);
 
 
   const [data, setData] = useState({ title:"", images_src: null })
@@ -43,6 +46,8 @@ const Brands = () => {
   // APi Get 
   const [brands, setBrands] = useState([])
   const urlImg = "https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/"
+
+
   const getBrands = () => {
        fetch("https://autoapi.dezinfeksiyatashkent.uz/api/brands")
        .then(res => res.json())
@@ -57,14 +62,13 @@ const Brands = () => {
 
 
 
+
 // Add new Brand Api
-
-
 const createNewPost = (event) => {
   event.preventDefault();
   fetch("https://autoapi.dezinfeksiyatashkent.uz/api/brands", {
      method: "POST",
-     body: formdata,
+     body: formData,
     
      headers: {
         "Authorization": `Bearer ${tokenAi}`
@@ -83,8 +87,10 @@ const createNewPost = (event) => {
 // Add new Brand Api
 
 
+
+
 // Delete 
-const [deleteId, setDeleteId] = useState();
+
 
 const deleteData = () => {
    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/brands/${deleteId}`, {
@@ -96,7 +102,7 @@ const deleteData = () => {
    })
    .then(res => res.json())
    .then(deleteBrand => {
-      toast("Successfully deleted");
+      toast.success("Successfully deleted");
       setShowModal(false)
       getBrands();
    }).catch(error => {
@@ -107,31 +113,35 @@ const deleteData = () => {
 
 
   //  Edit
-
-  const editBrandNew = (item) => {
-     setData({...data, title:item.title, images_src: item.images_src});
-console.log(item,"iteemm")
+  const editCategory = (event) => {
+    event.preventDefault();
     const formData = new FormData();
- console.log(data,"dattaaa")
-    formData.append("title", data.title)
-    formData.append("images", data.images_src)
-    item.preventDefault();
+    formData.append('title', data.title);
+    if (data.images_src) {
+      formData.append('images', data.images_src);
+    }
+
     fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/brands/${deleteId}`, {
       method: "PUT",
-      body: formData,
       headers: {
-       Authorization: `Bearer ${tokenAi}`
-      }
+        Authorization: `Bearer ${tokenAi}`
+      },
+      body: formData,
     })
-    .then(res => res.json())
-    .then(deleteBrand => {
-       toast("Successfully Edited");
-       seteditBrand(false)
-       getBrands();
-    }).catch(error => {
-     toast("Something went wrong", error)
-    })
-  }
+      .then(res => res.json())
+      .then((res) => {
+        if(res.success){
+          toast.success("Successfully edited!")
+          seteditBrand(false);
+          getBrands();
+        }
+       
+      })
+      .catch(error => {
+        console.error("Error editing category:", error);
+      });
+  };
+  
 
 
   return (
@@ -148,7 +158,7 @@ console.log(item,"iteemm")
         </div>
       </div>
 <table className="border-separate border-spacing-2 border border-white-500 ... w-full">
-  <thead>
+  <thead >
     <tr>
       <th className="shadow-sm rounded-md border border-blue-600 ... bg-blue-600 text-white">BrandName</th>
       <th className="shadow-sm rounded-md border border-green-600 ... bg-green-600 text-white">BrandLogo</th>
@@ -162,10 +172,10 @@ console.log(item,"iteemm")
              
              <tbody key={index}>
              <tr onClick={()=> setDeleteId(logos?.id)}>
-              <td className="shadow-sm border border-white-700 ... h-[40px]  w-[250px] rounded-md">{logos.title}</td>
-              <td className="shadow-sm border border-transparent ... h-[40px] w-[10px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full max-h-[200px] rounded-md'/></td>
-              <td className="shadow-sm border border-white-700 ... h-[40px]   w-[10px] rounded-md">
-              <button className='bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-md m-2' onClick={handleEditOpen}><MdEdit className='text-md' /></button>
+              <td className="shadow-sm border border-white-700 ... h-[50px]  w-[350px] rounded-md mt-0 p-1">{logos.title}</td>
+              <td className="shadow-sm border border-transparent ... h-[100px] w-[40px] rounded-md"><img src={`${urlImg}${logos.image_src}`} alt={logos.title} className='max-w-full max-h-[200px] rounded-md'/></td>
+              <td className="shadow-sm border border-transparent ... h-[20px]   w-[10px] rounded-md">
+              <button className='bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-md m-2' onClick={()=>handleEditOpen(logos.id)}><MdEdit className='text-md' /></button>
               <button className='bg-red-600 hover:bg-red-500 text-white p-3 rounded-md   m-2' onClick={handleShow}><MdDelete  className='text-md'/></button>
               </td>
             </tr>
@@ -179,7 +189,7 @@ console.log(item,"iteemm")
     </div>
   
 
-  {/* Mpodals bootstrap*/}
+  {/* Modals bootstrap*/}
 {showModal &&
   <div className='flex justify-center align-middle fixed top-[50%] right-[35%] bg-white shadow-2xl rounded-md h-[100px] w-[400px] transition-all transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);'
   >
@@ -200,7 +210,9 @@ console.log(item,"iteemm")
     </div>
   </div>
   }
-{/* Mpodals bootstrap*/}
+
+
+{/* Modals bootstrap*/}
 
 {editBrand && 
    <>
@@ -217,16 +229,21 @@ console.log(item,"iteemm")
         <MdCancel className='text-red-600 text-[1.2rem] ml-[15rem] text-[1.5rem] text-right cursor-pointer' onClick={handleEditClose}/>
       </h2>
       <hr />
-      <form action="#" onSubmit={editBrandNew}>
+      <form action="#" onSubmit={editCategory}>
       <div className='flex flex-col mt-5'>
        
        <div className='mt-2 flex flex-col'>
         <label htmlFor=""><span className='text-red-600'>*</span> Brand Name</label>
-        <input onChange={(e)=>  setData({...data, title:e.target.value})} value={data.title} type="text" required placeholder='Brand Name' className='outline-none p-2 border border-sky-500 rounded-md' />
+        <input type="text" required placeholder='Brand Name' className='outline-none p-2 border border-sky-500 rounded-md' 
+        value={data.title}
+        onChange={(e) => setData({ ...data, title: e.target.value })}
+        />
         </div>
         <div className='mt-2 flex flex-col'>
         <label htmlFor=""><span className='text-red-600'>*</span>Upload Logo</label>
-        <input accept='image/*' type="file" value={data.images_src}  onChange={(e)=> ({...data, images_src: e?.target?.files[0]})} required className='outline-none p-2 border  border-sky-500 rounded-md' />
+        <input accept='image/*' type="file" required className='outline-none p-2 border  border-sky-500 rounded-md' 
+          onChange={(e) => setData({ ...data, images_src: e.target.files[0] })}
+        />
         </div>
        
       </div>
@@ -239,6 +256,8 @@ console.log(item,"iteemm")
   </div>
   </>
 }
+
+
 
 {/* Add Brand modal */}
 
@@ -257,6 +276,7 @@ console.log(item,"iteemm")
         <MdCancel className='text-red-600 text-[1.2rem] ml-[10rem] text-[1.5rem] text-right cursor-pointer' onClick={handleAddClose}/>
       </h2>
       <hr />
+
       <form action="#" onSubmit={createNewPost}>
       <div className='flex flex-col mt-5'>
        
